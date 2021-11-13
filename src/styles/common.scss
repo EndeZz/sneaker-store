@@ -1,0 +1,53 @@
+html {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  font-size: 10px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  @include font_config(normal, 400, 1.4rem, 1.6rem);
+
+  font-family: $font;
+}
+
+ul {
+  list-style: none;
+}
+
+a,
+button,
+input {
+  font-family: inherit;
+  margin: 0;
+  transition: 0.2s;
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: 1242px;
+}
+
+.hidden {
+  position: absolute;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+}
