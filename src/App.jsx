@@ -6,7 +6,11 @@ const App = () => {
     <div className="container">
       <aside className="drawer">
         <div className="drawer__content">
-          <h2 className="drawer__title">Корзина</h2>
+          <h2 className="drawer__title">
+            Корзина
+            <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" />
+          </h2>
+
           <ul className="cart__list">
             <li className="cart__item">
               <img src="/img/sneakers/1.jpg" alt="Кроссовки" className="cart__pic" />
