@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './Card.scss';
 
-const Card = ({ item, onFavorite, onPlus }) => {
+const Card = ({ item, onFavorite, onPlus, personalFavorite = false }) => {
   const [isAdded, setIsAdded] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(personalFavorite);
 
   // Инвертируем значение
   const handleClickPlus = () => {
@@ -10,11 +11,16 @@ const Card = ({ item, onFavorite, onPlus }) => {
     setIsAdded(!isAdded);
   };
 
+  const handleClickFavorite = () => {
+    onFavorite(item);
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className="card__item">
-      <div className="card__favorite" onClick={onFavorite}>
-        <img src="/img/unliked.svg" alt="Не лайкнуто" />
-      </div>
+      <button className="btn card__favorite" onClick={handleClickFavorite}>
+        <img src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="Не лайкнуто" />
+      </button>
 
       <img src={item.imgUrl} alt="" className="card__pic" />
       <h3 className="card__title">{item.title}</h3>
