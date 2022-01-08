@@ -63,9 +63,11 @@ const App = () => {
         </div>
 
         <div className="card__list">
-          {data.map((item, i) => (
-            <Card key={i} item={item} onPlus={() => onAddToCart(item)}></Card>
-          ))}
+          {data
+            .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+            .map((item, i) => (
+              <Card key={i} item={item} onPlus={() => onAddToCart(item)}></Card>
+            ))}
         </div>
       </div>
     </div>
