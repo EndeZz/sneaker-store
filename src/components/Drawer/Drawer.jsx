@@ -1,7 +1,7 @@
 import React from 'react';
 import './Drawer.scss';
 
-const Drawer = ({ onClose, items = [] }) => {
+const Drawer = ({ onClose, items = [], onRemove }) => {
   return (
     <aside className="drawer">
       <div className="drawer__content">
@@ -18,7 +18,12 @@ const Drawer = ({ onClose, items = [] }) => {
                 <h3 className="cart__title">{item.title}</h3>
                 <span className="cart__price">{item.price} руб.</span>
               </div>
-              <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" />
+              <img
+                src="/img/btn-remove.svg"
+                alt="Удалить"
+                className="cart__icon-remove"
+                onClick={() => onRemove(item.id)}
+              />
             </li>
           ))}
         </ul>
