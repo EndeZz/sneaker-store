@@ -70,6 +70,7 @@ input {
   border: 1px solid #f3f3f3;
   border-radius: 10px;
   padding: 0 15px;
+  position: relative;
 
   &__field {
     border: 0;
@@ -129,13 +130,23 @@ input {
     margin-right: 20px;
   }
 
-  &__icon-remove {
-    opacity: 0.4;
-    transition: opacity 0.2s ease-in-out;
-    cursor: pointer;
+  &__icon {
+    &-remove {
+      opacity: 0.4;
+      transition: opacity 0.2s ease-in-out;
+      cursor: pointer;
 
-    &:hover {
-      opacity: 1;
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &-clear {
+      position: absolute;
+      right: 6px;
+      top: 6px;
+      transition: opacity 0.2s ease-in-out;
+      cursor: pointer;
     }
   }
 

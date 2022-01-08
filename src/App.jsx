@@ -8,6 +8,7 @@ const App = () => {
   const [data, setData] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [cartOpened, setCartOpened] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
   const url_api = 'https://61d992cfce86530017e3cb6e.mockapi.io/items';
 
@@ -26,7 +27,12 @@ const App = () => {
 
   const onAddToCart = (obj) => {
     // Берет старые данные cartItems и в конце пушит новые
-    setCartItems(prev => [...prev, obj]);
+    setCartItems((prev) => [...prev, obj]);
+  };
+
+  const onChangeSearchInput = (e) => {
+    console.log(e);
+    setSearchValue(e);
   };
 
   return (
@@ -35,10 +41,24 @@ const App = () => {
       <Header onClickCart={() => onClickCart()} />
       <div className="content">
         <div className="content__group">
-          <h2 className="content__title">Все кроссовки</h2>
+          <h2 className="content__title">{searchValue ? `поиск по запросу: "${searchValue}"` : 'Все кроссовки'}</h2>
           <div className="search">
             <img src="/img/search.svg" alt="Поиск" className="search__icon" />
-            <input type="text" placeholder="Поиск..." className="search__field" />
+            <input
+              type="text"
+              placeholder="Поиск..."
+              className="search__field"
+              value={searchValue}
+              onChange={(e) => onChangeSearchInput(e.target.value)}
+            />
+            {searchValue && (
+              <img
+                onClick={() => setSearchValue('')}
+                src="/img/btn-remove.svg"
+                alt="Удалить"
+                className=" cart__icon-clear "
+              />
+            )}
           </div>
         </div>
 
