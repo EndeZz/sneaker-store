@@ -41,25 +41,34 @@ const App = () => {
   };
 
   const onAddToCart = (obj) => {
-    // Отправка объектов на mockapi
-    axios.post(`${url_api}/cart`, obj);
-    // Берет старые данные cartItems и в конце пушит новые
-    setCartItems((prev) => [...prev, obj]);
+    try {
+      // если в корзине есть такой товара, то исключи, иначе сохрани и отправь на бэк
+      if (cartItems.find((item) => +item.id === +obj.id)) {
+        axios.delete(`${url_api}/cart/${obj.id}`);
+        setCartItems((prev) => prev.filter((item) => +item.id !== +obj.id));
+      } else {
+        // Отправка объектов на mockapi
+        axios.post(`${url_api}/cart`, obj);
+        // Берет старые данные cartItems и в конце пушит новые
+        setCartItems((prev) => [...prev, obj]);
+      }
+    } catch (error) {
+      throw Error(error);
+    }
   };
 
   const onAddToFavorite = async (obj) => {
     try {
-          if (favorites.find((favObj) => favObj.id === obj.id)) {
-      axios.delete(`${url_api}/favorites/${obj.id}`);
-      // setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
-    } else {
-      const { data } = await axios.post(`${url_api}/favorites`, obj);
-      setFavorites((prev) => [...prev, data]);
-    }
+      if (favorites.find((favObj) => +favObj.id === +obj.id)) {
+        axios.delete(`${url_api}/favorites/${obj.id}`);
+        // setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+      } else {
+        const { data } = await axios.post(`${url_api}/favorites`, obj);
+        setFavorites((prev) => [...prev, data]);
+      }
     } catch (error) {
-      throw Error(error)
+      throw Error(error);
     }
-
   };
 
   const onRemoveFromCart = (id) => {

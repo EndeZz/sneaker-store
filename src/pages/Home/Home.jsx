@@ -30,7 +30,7 @@ const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchI
         {data
           .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
           .map((item, i) => (
-            <Card key={i} item={item} onFavorite={() => onAddToFavorite(item)} onPlus={() => onAddToCart(item)}></Card>
+            <Card key={i} item={item} onFavorite={(item) => onAddToFavorite(item)} onPlus={(item) => onAddToCart(item)}></Card>
           ))}
       </div>
     </div>
