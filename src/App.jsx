@@ -6,8 +6,10 @@ import Drawer from './components/Drawer/Drawer';
 
 const App = () => {
   const [data, setData] = useState([]);
+  const [cartOpened, setCartOpened] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
-  const url_api = 'https://61d992cfce86530017e3cb6e.mockapi.io/items'
+  const url_api = 'https://61d992cfce86530017e3cb6e.mockapi.io/items';
 
   useEffect(() => {
     fetch(url_api)
@@ -18,15 +20,13 @@ const App = () => {
       });
   }, [url_api]);
 
-  const [cartOpened, setCartOpened] = useState(false);
-
   const onClickCart = () => {
     setCartOpened(!cartOpened);
   };
 
   return (
     <div className="container">
-      {cartOpened && <Drawer onClose={() => onClickCart()} />}
+      {cartOpened && <Drawer items={data} onClose={() => onClickCart()} />}
       <Header onClickCart={() => onClickCart()} />
       <div className="content">
         <div className="content__group">

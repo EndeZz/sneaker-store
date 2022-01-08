@@ -1,7 +1,7 @@
 import React from 'react';
 import './Drawer.scss';
 
-const Drawer = ({ onClose }) => {
+const Drawer = ({ onClose, items = [] }) => {
   return (
     <aside className="drawer">
       <div className="drawer__content">
@@ -11,23 +11,16 @@ const Drawer = ({ onClose }) => {
         </h2>
 
         <ul className="cart__list">
-          <li className="cart__item">
-            <img src="/img/sneakers/1.jpg" alt="Кроссовки" className="cart__pic" />
-            <div className="cart__caption">
-              <h3 className="cart__title">Мужские кроссовки</h3>
-              <span className="cart__price">1999 руб.</span>
-            </div>
-            <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" />
-          </li>
-
-          <li className="cart__item">
-            <img src="/img/sneakers/1.jpg" alt="Кроссовки" className="cart__pic" />
-            <div className="cart__caption">
-              <h3 className="cart__title">Мужские кроссовки</h3>
-              <span className="cart__price">1999 руб.</span>
-            </div>
-            <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" />
-          </li>
+          {items.map((item, i) => (
+            <li key={i} className="cart__item">
+              <img src={item.imgUrl} alt="Кроссовки" className="cart__pic" />
+              <div className="cart__caption">
+                <h3 className="cart__title">{item.title}</h3>
+                <span className="cart__price">{item.price} руб.</span>
+              </div>
+              <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" />
+            </li>
+          ))}
         </ul>
 
         <ul className="cart__total">
