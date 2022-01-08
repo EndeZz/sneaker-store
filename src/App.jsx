@@ -48,13 +48,18 @@ const App = () => {
   };
 
   const onAddToFavorite = async (obj) => {
-    if (favorites.find((favObj) => favObj.id === obj.id)) {
+    try {
+          if (favorites.find((favObj) => favObj.id === obj.id)) {
       axios.delete(`${url_api}/favorites/${obj.id}`);
       // setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
     } else {
       const { data } = await axios.post(`${url_api}/favorites`, obj);
       setFavorites((prev) => [...prev, data]);
     }
+    } catch (error) {
+      throw Error(error)
+    }
+
   };
 
   const onRemoveFromCart = (id) => {
