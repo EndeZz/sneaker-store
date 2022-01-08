@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import Card from '../../components/Card/Card';
 
-const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchInput, cartItems }) => {
+const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchInput, cartItems, isLoading }) => {
+  const renderItems = () => {
+    const filteredItems = data.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()));
+    return (isLoading ? [...Array(10)] : filteredItems).map((item, i) => (
+      <Card
+        key={i}
+        item={item}
+        onFavorite={(item) => onAddToFavorite(item)}
+        onPlus={(item) => onAddToCart(item)}
+        isLoading={isLoading}
+        personalCartAdded={cartItems.some((obj) => +obj.id === +item.id)}
+      />
+    ));
+  };
   return (
     <div className="content">
       <div className="content__group">
@@ -26,18 +39,7 @@ const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchI
         </div>
       </div>
 
-      <div className="card__list">
-        {data
-          .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-          .map((item, i) => (
-            <Card
-              key={i}
-              item={item}
-              onFavorite={(item) => onAddToFavorite(item)}
-              onPlus={(item) => onAddToCart(item)}
-              personalCartAdded={cartItems.some((obj) => +obj.id === +item.id)}></Card>
-          ))}
-      </div>
+      <div className="card__list">{renderItems()}</div>
     </div>
   );
 };
