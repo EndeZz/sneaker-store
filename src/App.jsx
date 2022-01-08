@@ -6,8 +6,8 @@ import Drawer from './components/Drawer/Drawer';
 
 const App = () => {
   const [data, setData] = useState([]);
-  const [cartOpened, setCartOpened] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [cartOpened, setCartOpened] = useState(false);
 
   const url_api = 'https://61d992cfce86530017e3cb6e.mockapi.io/items';
 
@@ -24,9 +24,14 @@ const App = () => {
     setCartOpened(!cartOpened);
   };
 
+  const onAddToCart = (obj) => {
+    // Берет старые данные cartItems и в конце пушит новые
+    setCartItems(prev => [...prev, obj]);
+  };
+
   return (
     <div className="container">
-      {cartOpened && <Drawer items={data} onClose={() => onClickCart()} />}
+      {cartOpened && <Drawer items={cartItems} onClose={() => onClickCart()} />}
       <Header onClickCart={() => onClickCart()} />
       <div className="content">
         <div className="content__group">
@@ -39,7 +44,7 @@ const App = () => {
 
         <div className="card__list">
           {data.map((item, i) => (
-            <Card key={i} item={item}></Card>
+            <Card key={i} item={item} onPlus={() => onAddToCart(item)}></Card>
           ))}
         </div>
       </div>

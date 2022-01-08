@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import './Card.scss';
 
-const Card = ({ item }) => {
+const Card = ({ item, onFavorite, onPlus }) => {
   const [isAdded, setIsAdded] = useState(false);
 
   // Инвертируем значение
-  const handleClick = () => {
+  const handleClickPlus = () => {
+    onPlus(item);
     setIsAdded(!isAdded);
   };
 
   return (
     <div className="card__item">
-      <div className="card__favorite">
+      <div className="card__favorite" onClick={onFavorite}>
         <img src="/img/unliked.svg" alt="Не лайкнуто" />
       </div>
 
@@ -22,7 +23,7 @@ const Card = ({ item }) => {
           <span className="card__price-title">Цена:</span>
           <span className="card__price-subtitle">{item.price} руб.</span>
         </div>
-        <button className="btn" onClick={handleClick}>
+        <button className="btn" onClick={handleClickPlus}>
           <img src={isAdded ? '/img/btn-checked.svg' : '/img/plus.svg'} alt="Плюс" className="card__icon-plus" />
         </button>
       </div>
