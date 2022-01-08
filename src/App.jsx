@@ -25,15 +25,17 @@ const App = () => {
     //     setData(data);
     //   });
 
-    axios.get(`${url_api}/items`).then((res) => {
-      setData(res.data);
-    });
-    axios.get(`${url_api}/cart`).then((res) => {
-      setCartItems(res.data);
-    });
-    axios.get(`${url_api}/favorites`).then((res) => {
-      setFavorites(res.data);
-    });
+    const fetchData = async () => {
+      const cartResponse = await axios.get(`${url_api}/cart`);
+      const favoritesResponse = await axios.get(`${url_api}/favorites`);
+      const dataResponse = await axios.get(`${url_api}/items`);
+
+      setCartItems(cartResponse.data);
+      setFavorites(favoritesResponse.data);
+      setData(dataResponse.data);
+    };
+
+    fetchData();
   }, [url_api]);
 
   const onClickCart = () => {
@@ -90,6 +92,7 @@ const App = () => {
       <Route path="/" exact>
         <Home
           data={data}
+          cartItems={cartItems}
           searchValue={searchValue}
           setSearchValue={setSearchValue}
           onAddToCart={onAddToCart}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../../components/Card/Card';
 
-const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchInput }) => {
+const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchInput, cartItems }) => {
   return (
     <div className="content">
       <div className="content__group">
@@ -30,7 +30,12 @@ const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchI
         {data
           .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
           .map((item, i) => (
-            <Card key={i} item={item} onFavorite={(item) => onAddToFavorite(item)} onPlus={(item) => onAddToCart(item)}></Card>
+            <Card
+              key={i}
+              item={item}
+              onFavorite={(item) => onAddToFavorite(item)}
+              onPlus={(item) => onAddToCart(item)}
+              personalCartAdded={cartItems.some((obj) => +obj.id === +item.id)}></Card>
           ))}
       </div>
     </div>

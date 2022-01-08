@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './Card.scss';
 
-const Card = ({ item, onFavorite, onPlus, personalFavorite = false }) => {
-  const [isAdded, setIsAdded] = useState(false);
+const Card = ({ item, onFavorite, onPlus, personalFavorite = false, personalCartAdded = false }) => {
+  const [isAdded, setIsAdded] = useState(personalCartAdded);
   const [isFavorite, setIsFavorite] = useState(personalFavorite);
 
   // Инвертируем значение
