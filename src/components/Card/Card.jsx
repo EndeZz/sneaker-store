@@ -1,41 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Card.scss';
 
-const Card = () => {
+const Card = ({ item }) => {
+  const [isAdded, setIsAdded] = useState(false);
+
+  // Инвертируем значение
+  const handleClick = () => {
+    setIsAdded(!isAdded);
+  };
+
   return (
-    <ul className="card__list">
-      <li className="card__item">
-        <div className="card__favorite">
-          <img src="/img/unliked.svg" alt="Не лайкнуто" />
-        </div>
+    <div className="card__item">
+      <div className="card__favorite">
+        <img src="/img/unliked.svg" alt="Не лайкнуто" />
+      </div>
 
-        <img src="/img/sneakers/1.jpg" alt="" className="card__pic" />
-        <h3 className="card__title">Мужские кроссовки</h3>
-        <div className="card__desc">
-          <div className="card__caption">
-            <span className="card__price-title">Цена:</span>
-            <span className="card__price-subtitle">12 999 руб.</span>
-          </div>
-          <button className="btn">
-            <img src="/img/plus.svg" alt="Плюс" className="card__icon-plus" />
-          </button>
+      <img src={item.imgUrl} alt="" className="card__pic" />
+      <h3 className="card__title">{item.title}</h3>
+      <div className="card__desc">
+        <div className="card__caption">
+          <span className="card__price-title">Цена:</span>
+          <span className="card__price-subtitle">{item.price} руб.</span>
         </div>
-      </li>
-
-      <li className="card__item">
-        <img src="/img/sneakers/1.jpg" alt="" className="card__pic" />
-        <h3 className="card__title">Мужские кроссовки</h3>
-        <div className="card__desc">
-          <div className="card__caption">
-            <span>Цена:</span>
-            <span>12 999 руб.</span>
-          </div>
-          <button className="btn">
-            <img src="/img/plus.svg" alt="Плюс" className="card__icon-plus" />
-          </button>
-        </div>
-      </li>
-    </ul>
+        <button className="btn" onClick={handleClick}>
+          <img src={isAdded ? '/img/btn-checked.svg' : '/img/plus.svg'} alt="Плюс" className="card__icon-plus" />
+        </button>
+      </div>
+    </div>
   );
 };
 

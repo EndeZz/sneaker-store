@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.scss';
 
-const Header = () => {
+const Header = ({onClickCart}) => {
   return (
     <header className="header">
       <div className="header__logo">
@@ -13,7 +13,7 @@ const Header = () => {
       </div>
 
       <ul className="header__list">
-        <li className="header__item">
+        <li className="header__item" onClick={onClickCart}>
           <svg className="icon" width={20} height={20} aria-hidden={true}>
             <use xlinkHref="/img/icons.svg#cart"></use>
           </svg>

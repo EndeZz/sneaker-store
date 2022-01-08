@@ -4,6 +4,7 @@
 .card {
   &__list {
     display: flex;
+    flex-wrap: wrap;
   }
   &__item {
     border: 1px solid #eaeaea;
@@ -31,8 +32,9 @@
 
   &__icon {
     &-plus {
-      width: 11px;
-      height: 11px;
+      // width: 11px;
+      // height: 11px;
+      cursor: pointer;
     }
   }
 

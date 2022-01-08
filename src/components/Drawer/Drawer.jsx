@@ -1,13 +1,13 @@
 import React from 'react';
 import './Drawer.scss';
 
-const Header = () => {
+const Drawer = ({ onClose }) => {
   return (
-    <aside className="drawer hidden">
+    <aside className="drawer">
       <div className="drawer__content">
         <h2 className="drawer__title">
           Корзина
-          <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" />
+          <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" onClick={onClose} />
         </h2>
 
         <ul className="cart__list">
@@ -53,4 +53,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Drawer;
