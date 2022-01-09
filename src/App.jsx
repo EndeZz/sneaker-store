@@ -47,17 +47,30 @@ const App = () => {
     setCartOpened(!cartOpened);
   };
 
-  const onAddToCart = (obj) => {
+  const onAddToCart = async (obj) => {
     try {
+      const findId = cartItems.find((item) => +item.parentId === +obj.id);
       // если в корзине есть такой товара, то исключи, иначе сохрани и отправь на бэк
-      if (cartItems.find((item) => +item.id === +obj.id)) {
-        axios.delete(`${url_api}/cart/${obj.id}`);
-        setCartItems((prev) => prev.filter((item) => +item.id !== +obj.id));
+      if (findId) {
+        axios.delete(`${url_api}/cart/${findId.id}`);
+        setCartItems((prev) => prev.filter((item) => +item.parentId !== +obj.id));
       } else {
-        // Отправка объектов на mockapi
-        axios.post(`${url_api}/cart`, obj);
-        // Берет старые данные cartItems и в конце пушит новые
         setCartItems((prev) => [...prev, obj]);
+        // Отправка объектов на mockapi
+        const { data } = await axios.post(`${url_api}/cart`, obj);
+        // Берет старые данные cartItems и в конце пушит новые
+        setCartItems((prev) =>
+          prev.map((item) => {
+            // если parentId из массива совпадает с parentId из бэка, то замени у item id из бэка
+            if (item.parentId === data.parentId) {
+              return {
+                ...item,
+                id: data.id,
+              };
+            }
+            return item;
+          })
+        );
       }
     } catch (error) {
       throw Error(error);
@@ -81,7 +94,7 @@ const App = () => {
   const onRemoveFromCart = (id) => {
     // Отправка объектов на mockapi
     axios.delete(`${url_api}/cart/${id}`);
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => +item.parentId !== +id));
   };
 
   const onChangeSearchInput = (e) => {
@@ -90,8 +103,8 @@ const App = () => {
   };
 
   const hasItemAdded = (id) => {
-    return cartItems.some((obj) => +obj.id === +id)
-  }
+    return cartItems.some((obj) => +obj.parentId === +id);
+  };
 
   return (
     <AppContext.Provider value={{ data, cartItems, favorites, hasItemAdded }}>

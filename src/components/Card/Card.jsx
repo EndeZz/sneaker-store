@@ -3,17 +3,32 @@ import ContentLoader from 'react-content-loader';
 import AppContext from '../../context';
 import './Card.scss';
 
-const Card = ({ item, onFavorite, onPlus, personalFavorite = false, isLoading = false }) => {
+const Card = ({
+  id,
+  title,
+  imgUrl,
+  price,
+  onFavorite,
+  onPlus,
+  personalFavorite = false,
+  isLoading = false,
+}) => {
   const { hasItemAdded } = useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(personalFavorite);
 
+  // const { id, title, imgUrl, price } = item;
+
+  // console.log(item.title);
+
+  const items = { id, parentId: id, title, imgUrl, price };
+
   // Инвертируем значение
   const handleClickPlus = () => {
-    onPlus(item);
+    onPlus(items);
   };
 
   const handleClickFavorite = () => {
-    onFavorite(item);
+    onFavorite(items);
     setIsFavorite(!isFavorite);
   };
 
@@ -39,16 +54,16 @@ const Card = ({ item, onFavorite, onPlus, personalFavorite = false, isLoading = 
             <img src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="Не лайкнуто" />
           </button>
 
-          <img src={item.imgUrl} alt="" className="card__pic" />
-          <h3 className="card__title">{item.title}</h3>
+          <img src={imgUrl} alt="" className="card__pic" />
+          <h3 className="card__title">{title}</h3>
           <div className="card__desc">
             <div className="card__caption">
               <span className="card__price-title">Цена:</span>
-              <span className="card__price-subtitle">{item.price} руб.</span>
+              <span className="card__price-subtitle">{price} руб.</span>
             </div>
             <button className="btn" onClick={handleClickPlus}>
               <img
-                src={hasItemAdded(item.id) ? '/img/btn-checked.svg' : '/img/plus.svg'}
+                src={hasItemAdded(id) ? '/img/btn-checked.svg' : '/img/plus.svg'}
                 alt="Плюс"
                 className="card__icon-plus"
               />

@@ -20,10 +20,10 @@ const Home = ({
     return (isLoading ? [...Array(10)] : filteredItems).map((item, i) => (
       <Card
         key={i}
-        item={item}
         onFavorite={(item) => onAddToFavorite(item)}
         onPlus={(item) => onAddToCart(item)}
         isLoading={isLoading}
+        {...item}
       />
     ));
   };
