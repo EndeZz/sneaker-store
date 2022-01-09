@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Card from '../../components/Card/Card';
+import AppContext from '../../context';
 
-const Favorites = ({ data, onAddToFavorite }) => {
+const Favorites = ({ onAddToFavorite }) => {
+  const { favorites } = useContext(AppContext);
   return (
     <div className="content">
       <div className="content__group">
@@ -9,13 +11,8 @@ const Favorites = ({ data, onAddToFavorite }) => {
       </div>
 
       <div className="card__list">
-        {data.map((item, index) => (
-          <Card
-            key={index}
-            item={item}
-            personalFavorite={true}
-            onFavorite={onAddToFavorite}
-          />
+        {favorites.map((item, index) => (
+          <Card key={index} item={item} personalFavorite={true} onFavorite={onAddToFavorite} />
         ))}
       </div>
     </div>
