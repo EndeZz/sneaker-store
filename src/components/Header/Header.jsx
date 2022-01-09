@@ -9,7 +9,7 @@ const Header = ({ onClickCart }) => {
 
   return (
     <header className="header">
-      <Link to="/">
+      <Link to="/" className='header__link'>
         <div className="header__logo">
           <img src="/img/logo.png" alt="Логотип" className="header__logo_pic" />
           <div className="header__logo_info">
