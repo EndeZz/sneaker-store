@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AppContext from '../../context';
+import { useTotalPrice } from '../../hooks/useTotalPrice';
 import './Header.scss';
 
 const Header = ({ onClickCart }) => {
+  const { totalPrice } = useTotalPrice();
+
   return (
     <header className="header">
       <Link to="/">
@@ -19,7 +23,7 @@ const Header = ({ onClickCart }) => {
           <svg className="icon" width={20} height={20} aria-hidden={true}>
             <use xlinkHref="/img/icons.svg#cart"></use>
           </svg>
-          <span>1205 руб.</span>
+          <span>{totalPrice} руб.</span>
         </li>
         <li className="header__item">
           <Link to="/favorites">

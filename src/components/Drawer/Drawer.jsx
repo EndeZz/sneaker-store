@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AppContext from '../../context';
+import { useTotalPrice } from '../../hooks/useTotalPrice';
 import './Drawer.scss';
 
 const Drawer = ({ onClose, items = [], onRemove }) => {
+  const { totalPrice, taxPrice } = useTotalPrice();
+
   return (
     <aside className="drawer">
       <div className="drawer__content">
         <h2 className="drawer__title">
           Корзина
-          <img src="/img/btn-remove.svg" alt="Удалить" className="cart__icon-remove" onClick={onClose} />
+          <img
+            src="/img/btn-remove.svg"
+            alt="Удалить"
+            className="cart__icon-remove"
+            onClick={onClose}
+          />
         </h2>
 
         <ul className="cart__list">
@@ -32,12 +41,12 @@ const Drawer = ({ onClose, items = [], onRemove }) => {
           <li className="cart__info">
             <span>Итого:</span>
             <div className="cart__border-bottom"></div>
-            <b>21 212 руб.</b>
+            <b>{totalPrice} руб.</b>
           </li>
           <li className="cart__info">
             <span>Налог 5%:</span>
             <div className="cart__border-bottom"></div>
-            <b>1111 руб.</b>
+            <b>{taxPrice} руб.</b>
           </li>
           <li className="cart__info">
             <button className="btn_green btn_green_m">
