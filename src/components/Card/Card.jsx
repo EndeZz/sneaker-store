@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ContentLoader from 'react-content-loader';
+import AppContext from '../../context';
 import './Card.scss';
 
-const Card = ({ item, onFavorite, onPlus, personalFavorite = false, personalCartAdded = false, isLoading = false }) => {
-  const [isAdded, setIsAdded] = useState(personalCartAdded);
+const Card = ({ item, onFavorite, onPlus, personalFavorite = false, isLoading = false }) => {
+  const { hasItemAdded } = useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(personalFavorite);
 
   // Инвертируем значение
   const handleClickPlus = () => {
     onPlus(item);
-    setIsAdded(!isAdded);
   };
 
   const handleClickFavorite = () => {
@@ -47,7 +47,11 @@ const Card = ({ item, onFavorite, onPlus, personalFavorite = false, personalCart
               <span className="card__price-subtitle">{item.price} руб.</span>
             </div>
             <button className="btn" onClick={handleClickPlus}>
-              <img src={isAdded ? '/img/btn-checked.svg' : '/img/plus.svg'} alt="Плюс" className="card__icon-plus" />
+              <img
+                src={hasItemAdded(item.id) ? '/img/btn-checked.svg' : '/img/plus.svg'}
+                alt="Плюс"
+                className="card__icon-plus"
+              />
             </button>
           </div>
         </>
