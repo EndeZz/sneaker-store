@@ -89,8 +89,12 @@ const App = () => {
     setSearchValue(e);
   };
 
+  const hasItemAdded = (id) => {
+    return cartItems.some((obj) => +obj.id === +id)
+  }
+
   return (
-    <AppContext.Provider value={{ data, cartItems, favorites }}>
+    <AppContext.Provider value={{ data, cartItems, favorites, hasItemAdded }}>
       <div className="container">
         {cartOpened && (
           <Drawer items={cartItems} onClose={() => onClickCart()} onRemove={onRemoveFromCart} />
