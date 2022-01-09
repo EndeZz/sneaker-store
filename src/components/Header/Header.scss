@@ -35,4 +35,9 @@
 
     cursor: pointer;
   }
+
+  &__link {
+    text-decoration: none;
+    color: initial;
+  }
 }

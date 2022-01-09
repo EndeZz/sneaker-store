@@ -1,24 +1,38 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import Card from '../../components/Card/Card';
+import AppContext from '../../context';
 
-const Home = ({ data, searchValue, onAddToCart, onAddToFavorite, onChangeSearchInput, cartItems, isLoading }) => {
+const Home = ({
+  data,
+  searchValue,
+  onAddToCart,
+  onAddToFavorite,
+  onChangeSearchInput,
+  cartItems,
+  isLoading,
+}) => {
   const renderItems = () => {
-    const filteredItems = data.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()));
+    const filteredItems = data.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
     return (isLoading ? [...Array(10)] : filteredItems).map((item, i) => (
       <Card
         key={i}
-        item={item}
         onFavorite={(item) => onAddToFavorite(item)}
         onPlus={(item) => onAddToCart(item)}
         isLoading={isLoading}
-        personalCartAdded={cartItems.some((obj) => +obj.id === +item.id)}
+        {...item}
       />
     ));
   };
   return (
     <div className="content">
       <div className="content__group">
-        <h2 className="content__title">{searchValue ? `поиск по запросу: "${searchValue}"` : 'Все кроссовки'}</h2>
+        <h2 className="content__title">
+          {searchValue ? `поиск по запросу: "${searchValue}"` : 'Все кроссовки'}
+        </h2>
         <div className="search">
           <img src="/img/search.svg" alt="Поиск" className="search__icon" />
           <input

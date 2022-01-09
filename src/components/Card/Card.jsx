@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ContentLoader from 'react-content-loader';
+import AppContext from '../../context';
 import './Card.scss';
 
-const Card = ({ item, onFavorite, onPlus, personalFavorite = false, personalCartAdded = false, isLoading = false }) => {
-  const [isAdded, setIsAdded] = useState(personalCartAdded);
+const Card = ({
+  id,
+  title,
+  imgUrl,
+  price,
+  onFavorite,
+  onPlus,
+  personalFavorite = false,
+  isLoading = false,
+}) => {
+  const { hasItemAdded } = useContext(AppContext);
   const [isFavorite, setIsFavorite] = useState(personalFavorite);
+
+  // const { id, title, imgUrl, price } = item;
+
+  // console.log(item.title);
+
+  const items = { id, parentId: id, title, imgUrl, price };
 
   // Инвертируем значение
   const handleClickPlus = () => {
-    onPlus(item);
-    setIsAdded(!isAdded);
+    onPlus(items);
   };
 
   const handleClickFavorite = () => {
-    onFavorite(item);
+    onFavorite(items);
     setIsFavorite(!isFavorite);
   };
 
@@ -39,15 +54,19 @@ const Card = ({ item, onFavorite, onPlus, personalFavorite = false, personalCart
             <img src={isFavorite ? '/img/liked.svg' : '/img/unliked.svg'} alt="Не лайкнуто" />
           </button>
 
-          <img src={item.imgUrl} alt="" className="card__pic" />
-          <h3 className="card__title">{item.title}</h3>
+          <img src={imgUrl} alt="" className="card__pic" />
+          <h3 className="card__title">{title}</h3>
           <div className="card__desc">
             <div className="card__caption">
               <span className="card__price-title">Цена:</span>
-              <span className="card__price-subtitle">{item.price} руб.</span>
+              <span className="card__price-subtitle">{price} руб.</span>
             </div>
             <button className="btn" onClick={handleClickPlus}>
-              <img src={isAdded ? '/img/btn-checked.svg' : '/img/plus.svg'} alt="Плюс" className="card__icon-plus" />
+              <img
+                src={hasItemAdded(id) ? '/img/btn-checked.svg' : '/img/plus.svg'}
+                alt="Плюс"
+                className="card__icon-plus"
+              />
             </button>
           </div>
         </>
